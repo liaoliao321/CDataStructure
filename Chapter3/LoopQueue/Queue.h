@@ -14,7 +14,8 @@ typedef struct {
 
 void initQueue(Queue * & q);
 void destroyQueue(Queue * & q);
-bool isFull(Queue * & q);
+bool isUpFull(Queue * & q);
+bool isDownFull(Queue * & q);
 bool isEmpty(Queue * & q);
 bool enQueue(Queue * & q, ElemType e);
 bool deQueue(Queue * & q, ElemType &e);

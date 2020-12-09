@@ -19,6 +19,7 @@ int main()
 
     ElemType e;
     deQueue(queue, e);
+    deQueue(queue, e);
     printQueue(queue);
     return 0;
 }
@@ -27,11 +28,15 @@ bool isEmpty(Queue *&q)
     return q->front == q->rear;
 }
 
-bool isFull(Queue *&q)
+bool isUpFull(Queue *&q)
 {
-    return q->front + 1 % MaxSize == MaxSize - 1;
+    return (q->front + 1) % MaxSize == q->front;
 }
 
+bool isDownFull(Queue *&q)
+{
+    return q->front == q->rear;
+}
 void initQueue(Queue *&q)
 {
     q = (Queue *)malloc(sizeof(Queue));
@@ -45,19 +50,19 @@ void destroyQueue(Queue *&q)
 
 bool enQueue(Queue *&q, ElemType e)
 {
-    if (isFull(q))
+    if (isUpFull(q))
         return false;
 
     q->data[q->rear] = e;
-    q->rear++;
+    q->rear = (q->rear + 1) % MaxSize;
     return true;
 }
 bool deQueue(Queue *&q, ElemType &e)
 {
-    if (isFull(q))
+    if (isDownFull(q))
         return false;
 
-    q->front++;
+    q->front = q->front + 1 % MaxSize;
     e = q->data[q->front];
     return true;
 }
@@ -75,7 +80,7 @@ void printQueue(Queue *&q)
     printf("front >>> ");
     for (i = q->front; i <= q->rear - 1; i++)
     {
-        printf("%d - >", q->data[i]);
+        printf("%d -> ", q->data[i]);
     }
     printf("  <<< rear\n");
 }

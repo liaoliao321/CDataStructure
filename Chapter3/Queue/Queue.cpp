@@ -27,7 +27,13 @@ int main()
     deQueue(queue, e);
     printQueue(queue);
 
-    
+    p = array;
+    for (i = 0; i < size; i++)
+    {
+        enQueue(queue, *p);
+        p++;
+    }
+    printQueue(queue);
     return 0;
 }
 bool isEmpty(Queue *&q)
@@ -53,6 +59,9 @@ void destroyQueue(Queue *&q)
 
 bool enQueue(Queue *&q, ElemType e)
 {
+    if (isEmpty(q))
+        q->front = q->rear = 0;
+
     if (isFull(q))
         return false;
 
@@ -83,7 +92,7 @@ void printQueue(Queue *&q)
     printf("front >>> ");
     for (i = q->front; i <= q->rear - 1; i++)
     {
-        printf("%d - >", q->data[i]);
+        printf("%d -> ", q->data[i]);
     }
     printf("  <<< rear\n");
 }
